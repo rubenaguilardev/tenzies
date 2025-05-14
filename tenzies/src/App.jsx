@@ -1,18 +1,29 @@
 import Die from './Die'
 import { useState } from 'react'
+import { nanoid } from 'nanoid'
 
 export default function App() {
 
     const [dice, setDice] = useState(generateAllNewDice())
 
     function generateAllNewDice() {
-        
-        return new Array(10)
+        return new Array(10) 
             .fill(0)
-            .map(() => Math.ceil(Math.random() * 6))
+            .map(() => ({
+                value: Math.ceil(Math.random() * 6), 
+                isHeld: false,
+                id: nanoid()
+            }))
+            
+    }
+
+    console.log(generateAllNewDice())
+
+    function rollDice() {
+        setDice(generateAllNewDice())
     }
     
-    const newDice = newDice.map(eachDice => <Die value={eachDice}/>)
+    const newDice = dice.map(eachDie => <Die key={eachDie.id} value={eachDie.value}/>)
 
 
     return (
@@ -20,9 +31,9 @@ export default function App() {
             <h1>Tenzies</h1>
             <p>Roll until all dice are the same. Click each die to freeze it at its current value between rolls.</p>
             <section>
-                {newDie}
+                {newDice}
             </section>
-            <button className='rollBtn'>Roll</button>
+            <button className='roll-btn' onClick={rollDice}>Roll</button>
 
         </main>
     )
