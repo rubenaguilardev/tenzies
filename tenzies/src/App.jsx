@@ -6,18 +6,32 @@ export default function App() {
 
     const [dice, setDice] = useState(generateAllNewDice())
 
+    const gameWon = (
+        dice.every(die => die.isHeld) && 
+        dice.every(die => die.value === dice[0].value)  
+    )
+
+    function randomNum() {
+        return Math.ceil(Math.random() * 6)
+    }
+
     function generateAllNewDice() {
         return new Array(10) 
             .fill(0)
             .map(() => ({
-                value: Math.ceil(Math.random() * 6), 
+                value: randomNum(), 
                 isHeld: false,
                 id: nanoid()
             }))
     }
 
     function rollDice() {
-        setDice(generateAllNewDice())
+
+        setDice(prevDice => (
+            prevDice.map(die => !die.isHeld ? 
+                {...die, value: randomNum()}
+                : die
+        )))
     }
 
     function hold(id) {
@@ -43,7 +57,7 @@ export default function App() {
             <section>
                 {newDice}
             </section>
-            <button className='roll-btn' onClick={rollDice}>Roll</button>
+            <button className='roll-btn' onClick={rollDice}>{gameWon ? 'New Game' : 'Roll'}</button>
         </main>
     )
 }
