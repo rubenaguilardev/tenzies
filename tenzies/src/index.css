@@ -16,7 +16,7 @@ main {
     background-color: #F5F5F5;
     width: 320px;
     height: 320px;
-    margin: 0 auto;
+    margin: 20px auto 0 auto;
     text-align: center;
     padding: 30px;
     border-radius: 10px;
