@@ -3,7 +3,7 @@ import { useState } from 'react'
 
 export default function App() {
 
-    const [die, setDie] = useState(generateAllNewDice())
+    const [dice, setDice] = useState(generateAllNewDice())
 
     function generateAllNewDice() {
         
@@ -12,7 +12,7 @@ export default function App() {
             .map(() => Math.ceil(Math.random() * 6))
     }
     
-    const newDie = die.map(eachDie => <Die value={eachDie}/>)
+    const newDice = newDice.map(eachDice => <Die value={eachDice}/>)
 
 
     return (
