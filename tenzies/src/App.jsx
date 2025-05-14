@@ -14,18 +14,28 @@ export default function App() {
                 isHeld: false,
                 id: nanoid()
             }))
-            
     }
-
-    console.log(generateAllNewDice())
 
     function rollDice() {
         setDice(generateAllNewDice())
     }
+
+    function hold(id) {
+        setDice(prevDie => prevDie.map(die => (
+            id === die.id ? {...die, isHeld: !die.isHeld} : die
+        )))
+    }
     
-    const newDice = dice.map(eachDie => <Die key={eachDie.id} value={eachDie.value}/>)
+    const newDice = dice.map(eachDie => (
+        <Die 
+            key={eachDie.id} 
+            value={eachDie.value}
+            held={eachDie.isHeld}
+            id={eachDie.id}
+            hold={hold}
+        />))
 
-
+       
     return (
         <main>
             <h1>Tenzies</h1>
@@ -34,7 +44,6 @@ export default function App() {
                 {newDice}
             </section>
             <button className='roll-btn' onClick={rollDice}>Roll</button>
-
         </main>
     )
 }
